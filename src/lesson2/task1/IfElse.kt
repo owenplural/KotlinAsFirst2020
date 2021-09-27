@@ -3,6 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -68,7 +69,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    return when {
+        (age % 10 == 1) && (age != 11) && (age != 111) -> "$age год"
+        (age > 14 || age < 10) && (age % 10 == 2) || (age % 10 == 3) || (age % 10 == 4) -> "$age года"
+        else -> "$age лет"
+    }
+}
+
 
 /**
  * Простая (2 балла)
@@ -122,7 +130,14 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    return when {
+        (a * a + b * b == c * c) || (c * c + b * b == a * a) || (a * a + c * c == b * b) -> 1
+        (a * a + b * b > c * c) || (c * c + b * b > a * a) || (a * a + c * c > b * b) -> 2
+        (a * a + b * b < c * c) || (c * c + b * b < a * a) || (a * a + c * c < b * b) -> 0
+        else -> -1
+    }
+}
 
 /**
  * Средняя (3 балла)
