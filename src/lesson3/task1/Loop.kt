@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -138,7 +139,24 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var size = 0
+    var x = n
+    while (x > 0) {
+        x /= 10
+        size++
+    }
+    x = n
+    var result = 0
+    var a: Int
+    while (x > 0) {
+        a = x % 10
+        size -= 1
+        result += a * 10.0.pow(size).toInt()
+        x /= 10
+    }
+    return result
+}
 
 /**
  * Средняя (3 балла)
@@ -149,7 +167,12 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    return when (revert(n)) {
+        n -> true
+        else -> false
+    }
+}
 
 /**
  * Средняя (3 балла)

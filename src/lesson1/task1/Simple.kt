@@ -2,8 +2,8 @@
 
 package lesson1.task1
 
-import java.util.*
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.sqrt
 
 // Урок 1: простые функции
 // Максимальное количество баллов = 5
@@ -67,9 +67,7 @@ fun main() {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
-    var sumSeconds = 0
-    sumSeconds = hours * 60 * 60 + minutes * 60 + seconds
-    return sumSeconds
+    return hours * 60 * 60 + minutes * 60 + seconds
 }
 
 /**
@@ -80,11 +78,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    var dlinMetr: Double = 0.0
-    var dlinSm: Double = 0.0
-    dlinSm = sagenes * 48 * 4.445 + arshins * 16 * 4.445 + vershoks * 4.445
-    dlinMetr = dlinSm / 100
-    return dlinMetr
+    return ((sagenes * 48 * 4.445 + arshins * 16 * 4.445 + vershoks * 4.445)/100)
 }
 
 /**
@@ -93,11 +87,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Пользователь задает угол в градусах, минутах и секундах (например, 36 градусов 14 минут 35 секунд).
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
-fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
-    var rad: Double = 0.0
-    rad = (((deg + min / 60.0 + sec / 3600.0) * PI) / 180.0)
-    return rad
-}
+fun angleInRadian(deg: Int, min: Int, sec: Int): Double = ((((deg + (min / 60.0) + (sec / 3600.0)) * PI) / 180.0))
 
 /**
  * Тривиальная (1 балл)
@@ -133,13 +123,10 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    var sumMindep = 0
-    var sumMinar = 0
-    var razn = 0
-    sumMindep = hoursDepart * 60 + minutesDepart
-    sumMinar = hoursArrive * 60 + minutesArrive
-    razn = sumMinar - sumMindep
-    return razn
+    var sumMinded: Int
+    (hoursDepart * 60 + minutesDepart).also { sumMinded = it }
+    val sumMinor: Int = hoursArrive * 60 + minutesArrive
+    return sumMinor - sumMinded
 
 
 }
@@ -153,15 +140,11 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
 
-    var god1: Double = 0.0
-    var god2: Double = 0.0
-    var god3: Double = 0.0
-    god1 = initial * (percent / 100.0) + initial
+    val god2: Double
+    val god1: Double = initial * (percent / 100.0) + initial
     god2 = god1 * (percent / 100.0) + god1
-    god3 = god2 * (percent / 100.0) + god2
 
-
-    return god3
+    return god2 * (percent / 100.0) + god2
 
 
 }
@@ -173,13 +156,10 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    var num1 = 0
-    var num2 = 0
-    var num3 = 0
-    var chisl = 0
-    num1 = number % 10
-    num2 = (number / 10) % 10
-    num3 = (number / 100)
+    val chisl: Int
+    val num1: Int = number % 10
+    val num2: Int = (number / 10) % 10
+    val num3: Int = (number / 100)
     chisl = num3 + num2 * 10 + num1 * 100
     return chisl
 

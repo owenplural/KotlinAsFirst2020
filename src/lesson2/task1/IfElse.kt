@@ -71,8 +71,9 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     return when {
-        (age % 10 == 1) && (age != 11) && (age != 111) -> "$age год"
-        (age > 14 || age < 10) && (age % 10 == 2) || (age % 10 == 3) || (age % 10 == 4) -> "$age года"
+        age % 100 in 10..14 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 in 1..4 -> "$age года"
         else -> "$age лет"
     }
 }
@@ -131,12 +132,14 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return when {
-        (a * a + b * b == c * c) || (c * c + b * b == a * a) || (a * a + c * c == b * b) -> 1
-        (a * a + b * b > c * c) || (c * c + b * b > a * a) || (a * a + c * c > b * b) -> 2
-        (a * a + b * b < c * c) || (c * c + b * b < a * a) || (a * a + c * c < b * b) -> 0
-        else -> -1
-    }
+    if ((a + b > c) && (a + c > b) && (b + c > a)) {
+        return when {
+            (a * a + b * b == c * c) || (c * c + b * b == a * a) || (a * a + c * c == b * b) -> 1
+            (a * a + b * b > c * c) && (c * c + b * b > a * a) && (a * a + c * c > b * b) -> 0
+            else -> 2
+        }
+    } else return -1
+
 }
 
 /**
@@ -147,4 +150,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        (d == a) || (b == c) -> 0
+        (c < b) && (a < c) && (a < d) && (b < d) -> b - c
+        (a < d) && (c < b) && (d < b) && (c < a) -> d - a
+        (a < d) && (c < b) && (a < c) && (d < b) -> d - c
+        (c < a) && (a < d) && (c < b) && (b < d) -> b - a
+        else -> -1
+    }
+}
