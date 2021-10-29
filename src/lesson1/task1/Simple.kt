@@ -66,9 +66,7 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
-    return hours * 60 * 60 + minutes * 60 + seconds
-}
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int = hours * 60 * 60 + minutes * 60 + seconds
 
 /**
  * Тривиальная (1 балл)
@@ -77,9 +75,8 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    return ((sagenes * 48 * 4.445 + arshins * 16 * 4.445 + vershoks * 4.445)/100)
-}
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
+    ((sagenes * 48 * 4.445 + arshins * 16 * 4.445 + vershoks * 4.445) / 100)
 
 /**
  * Тривиальная (1 балл)
@@ -95,10 +92,7 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = ((((deg + (min / 60.0)
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    return (sqrt((sqr(x2 - x1)) + (sqr(y2 - y1))))
-
-}
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = (sqrt((sqr(x2 - x1)) + (sqr(y2 - y1))))
 
 /**
  * Простая (2 балла)
@@ -109,7 +103,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
 
 fun thirdDigit(number: Int): Int {
     var a: Int = number
-    a = a / 100
+    a /= 100
 
     return (a % 10)
 
@@ -123,11 +117,10 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    var sumMinded: Int
-    (hoursDepart * 60 + minutesDepart).also { sumMinded = it }
+    var a: Int
+    (hoursDepart * 60 + minutesDepart).also { a = it }
     val sumMinor: Int = hoursArrive * 60 + minutesArrive
-    return sumMinor - sumMinded
-
+    return sumMinor - a
 
 }
 
@@ -140,11 +133,11 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
 
-    val god2: Double
-    val god1: Double = initial * (percent / 100.0) + initial
-    god2 = god1 * (percent / 100.0) + god1
+    val year2: Double
+    val year1: Double = initial * (percent / 100.0) + initial
+    year2 = year1 * (percent / 100.0) + year1
 
-    return god2 * (percent / 100.0) + god2
+    return year2 * (percent / 100.0) + year2
 
 
 }
@@ -156,11 +149,11 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    val chisl: Int
+    val b: Int
     val num1: Int = number % 10
     val num2: Int = (number / 10) % 10
     val num3: Int = (number / 100)
-    chisl = num3 + num2 * 10 + num1 * 100
-    return chisl
+    b = num3 + num2 * 10 + num1 * 100
+    return b
 
 }
