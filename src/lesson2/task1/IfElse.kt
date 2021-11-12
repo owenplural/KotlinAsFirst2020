@@ -132,13 +132,12 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     val max = maxOf(a, b, c)
-    return if (((a + b + c) / max) > 2) {
-        when {
-            ((a * a + b * b + c * c) / (max * max)) > 2.0 -> 0
-            ((a * a + b * b + c * c) / (max * max)) == 2.0 -> 1
-            else -> 2
-        }
-    } else -1
+    return when {
+        ((a * a + b * b + c * c) / (max * max)) > 2.0 -> 0
+        (((a * a + b * b + c * c) / (max * max)) == 2.0) -> 1
+        (((a + b + c) / max) <= 2) -> -1
+        else -> 2
+    }
 }
 
 /**

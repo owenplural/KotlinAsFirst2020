@@ -189,10 +189,7 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    return when (revert(n)) {
-        n -> true
-        else -> false
-    }
+    return (revert(n)) == n
 }
 
 /**
