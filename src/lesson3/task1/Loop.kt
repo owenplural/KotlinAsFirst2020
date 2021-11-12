@@ -73,7 +73,17 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count: Int
+    var m = n
+    if (m == 0) count = 1 else count = 0
+    while (m > 0) {
+        m /= 10
+        count += 1
+    }
+    return count
+
+}
 
 /**
  * Простая (2 балла)
@@ -84,12 +94,12 @@ fun digitNumber(n: Int): Int = TODO()
 fun fib(n: Int): Int {
     var fib1 = 1
     var fib2 = 1
-    var i = 0
-    while (i < n - 2) {
+    var a = 0
+    for (i in 0..(n - 3)) {
         val fibSum = fib1 + fib2
         fib1 = fib2
         fib2 = fibSum
-        i += 1
+        a = 1 + i
     }
     return fib2
 }
@@ -237,31 +247,4 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int {
-    var fib1 = 0
-    var fib2 = 0
-    var result = 0
-    var count = 0
-    var fibSum: Int
-
-    while (count < n) {
-        if (fib1 == 0 && fib2 == 0) {
-            fib1 = 1
-        }
-
-        fibSum = fib1 + fib2
-        fib1 = fib2
-        fib2 = fibSum
-
-        var x = revert(fibSum)
-        while (x > 0) {
-            count++
-            if (count == n) {
-                result = x % 10
-                break
-            }
-            x /= 10
-        }
-    }
-    return result
-}
+fun fibSequenceDigit(n: Int): Int = TODO()
