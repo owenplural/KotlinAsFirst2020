@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,53 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val a = str.split(" ")
+    if (a.size != 3) {
+        return ""
+    }
+    val m: String
+    val d: Int = a[0].toInt()
+    val y: Int = a[2].toInt()
+
+    try {
+        m = when (a[1]) {
+            "января" -> "01"
+            "февраля" -> "02"
+            "марта" -> "03"
+            "апреля" -> "04"
+            "мая" -> "05"
+            "июня" -> "06"
+            "июля" -> "07"
+            "августа" -> "08"
+            "сентября" -> "09"
+            "октября" -> "10"
+            "ноября" -> "11"
+            "декабря" -> "12"
+            else -> "0"
+        }
+    } catch (e: Exception) {
+        return ""
+    }
+
+    if (m == "0") {
+        return ""
+    }
+    val j = m.toInt()
+    if (d < 1 || d > daysInMonth(j, y)) {
+        return ""
+    }
+    val s = d.toString()
+    val p: String
+    if (s.length == 1) {
+        p = "0" + s
+    } else {
+        p = s
+    }
+
+    return "$p.$m.$y"
+
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +134,43 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val a = digital.split(".")
+    if (a.size != 3) {
+        return ""
+    }
+
+    val d = a[0].toIntOrNull()
+    val l = a[1].toIntOrNull()
+    val y = a[2].toIntOrNull()
+
+    if (d == null || d <= 0 ||
+        l == null || l !in 1..12 ||
+        y == null || y <= 0
+    ) return ""
+
+    if (d.toInt() < 1 || d.toInt() > daysInMonth(l, y)) {
+        return ""
+    }
+
+    val m = when (l) {
+        1 -> "января"
+        2 -> "февраля"
+        3 -> "марта"
+        4 -> "апреля"
+        5 -> "мая"
+        6 -> "июня"
+        7 -> "июля"
+        8 -> "августа"
+        9 -> "сентября"
+        10 -> "октября"
+        11 -> "ноября"
+        else -> "декабря"
+    }
+
+    return "$d $m $y"
+}
+
 
 /**
  * Средняя (4 балла)

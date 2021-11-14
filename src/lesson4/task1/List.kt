@@ -155,7 +155,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
         b = 0.0
     }
     for (i in 0 until list.size) {
-        val element = list[i]
+        list[i]
         list[i] = list[i] - b
     }
     return list
@@ -208,11 +208,11 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     var del = 2
     val list = mutableListOf<Int>()
-    var n = n
-    while (n > 1) {
-        while (n % del == 0) {
+    var q = n
+    while (q > 1) {
+        while (q % del == 0) {
             list.add(del)
-            n = n / del
+            q = q / del
 
         }
         del += 1
@@ -231,11 +231,11 @@ fun factorize(n: Int): List<Int> {
 fun factorizeToString(n: Int): String {
     var del = 2
     val list = mutableListOf<Int>()
-    var n = n
-    while (n > 1) {
-        while (n % del == 0) {
+    var q = n
+    while (q > 1) {
+        while (q % del == 0) {
             list.add(del)
-            n = n / del
+            q /= del
 
         }
         del += 1
