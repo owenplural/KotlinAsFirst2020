@@ -81,47 +81,32 @@ fun dateStrToDigit(str: String): String {
     if (a.size != 3) {
         return ""
     }
-    val m: String
-    val d: Int = a[0].toInt()
-    val y: Int = a[2].toInt()
+    val d = a[0].toIntOrNull()
+    val y = a[2].toIntOrNull()
+    if (d == null || y == null) return ""
 
-    try {
-        m = when (a[1]) {
-            "января" -> "01"
-            "февраля" -> "02"
-            "марта" -> "03"
-            "апреля" -> "04"
-            "мая" -> "05"
-            "июня" -> "06"
-            "июля" -> "07"
-            "августа" -> "08"
-            "сентября" -> "09"
-            "октября" -> "10"
-            "ноября" -> "11"
-            "декабря" -> "12"
-            else -> "0"
-        }
-    } catch (e: Exception) {
+    val m = when (a[1]) {
+        "января" -> "01"
+        "февраля" -> "02"
+        "марта" -> "03"
+        "апреля" -> "04"
+        "мая" -> "05"
+        "июня" -> "06"
+        "июля" -> "07"
+        "августа" -> "08"
+        "сентября" -> "09"
+        "октября" -> "10"
+        "ноября" -> "11"
+        "декабря" -> "12"
+        else -> return ""
+    }
+
+    if (d !in 1..daysInMonth(m.toInt(), y)) {
         return ""
     }
+    val dayStr = if (d in 1..9) "0$d" else "$d"
 
-    if (m == "0") {
-        return ""
-    }
-    val j = m.toInt()
-    if (d < 1 || d > daysInMonth(j, y)) {
-        return ""
-    }
-    val s = d.toString()
-    val p: String
-    if (s.length == 1) {
-        p = "0" + s
-    } else {
-        p = s
-    }
-
-    return "$p.$m.$y"
-
+    return "$dayStr.$m.$y"
 }
 
 /**
