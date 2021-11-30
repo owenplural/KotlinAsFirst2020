@@ -146,17 +146,12 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val sum = list.sum()
-    val a = list.size
-    val b: Double
-    if (a > 0) {
-        b = (sum / a)
-    } else {
-        b = 0.0
-    }
+
+    val meanResult = mean(list)
     for (i in 0 until list.size) {
         list[i]
-        list[i] = list[i] - b
+        list[i] = list[i] - meanResult
+
     }
     return list
 }
@@ -212,7 +207,7 @@ fun factorize(n: Int): List<Int> {
     while (q > 1) {
         while (q % del == 0) {
             list.add(del)
-            q = q / del
+            q /= del
 
         }
         del += 1
@@ -228,21 +223,8 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String {
-    var del = 2
-    val list = mutableListOf<Int>()
-    var q = n
-    while (q > 1) {
-        while (q % del == 0) {
-            list.add(del)
-            q /= del
+fun factorizeToString(n: Int): String = TODO()
 
-        }
-        del += 1
-    }
-    list.sorted()
-    return list.joinToString(separator = "*")
-}
 
 /**
  * Средняя (3 балла)
@@ -297,7 +279,21 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var str = ""
+    val romNumb = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val romAbc = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    var n1 = n
+    var i = 0
+    while (n1 > 0) {
+        while (n1 - romNumb[i] >= 0) {
+            str += romAbc[i]
+            n1 -= romNumb[i]
+        }
+        i += 1
+    }
+    return str
+}
 
 /**
  * Очень сложная (7 баллов)
