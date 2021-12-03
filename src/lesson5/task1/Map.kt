@@ -2,6 +2,7 @@
 
 package lesson5.task1
 
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -96,7 +97,15 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+
+    val list: List<Pair<String, Int>> = grades.toList()
+    return list.groupBy(
+        { it.second },
+        { it.first }
+    )
+
+}
 
 /**
  * Простая (2 балла)
@@ -109,6 +118,17 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+/**{
+operator fun <K, V> Map<K, V>.iterator(): Iterator<Map.Entry<K, V>> = entrySet().iterator()
+operator fun <K, V> Map.Entry<K, V>.component1() = getKey()
+operator fun <K, V> Map.Entry<K, V>.component2() = getValue()
+for ((key, element) in a) {
+println(true)
+
+}
+println(false)
+}*/
+
 
 /**
  * Простая (2 балла)
@@ -183,7 +203,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)

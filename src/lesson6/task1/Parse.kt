@@ -156,7 +156,6 @@ fun dateDigitToStr(digital: String): String {
     return "$d $m $y"
 }
 
-
 /**
  * Средняя (4 балла)
  *
