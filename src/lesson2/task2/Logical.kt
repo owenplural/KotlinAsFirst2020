@@ -77,9 +77,12 @@ fun circleInside(
  */
 
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val average = (a + b + c - minOf(a, b, c) - maxOf(a, b, c))
+    val min = minOf(a, b, c)
+    val minimum = minOf(r, s)
+    val max = maxOf(r, s)
     return when {
-        ((r >= a) && (s >= b)) || ((r >= b) && (s >= a)) || ((r >= a) && (s >= c)) || ((r >= c) && (s >= a)) || (((r >= c) && (s >= b)) || ((r >= b) && (s >= c))) -> true
+        ((min <= minimum) && (average <= max)) -> true
         else -> false
-
     }
 }

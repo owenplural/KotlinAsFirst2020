@@ -95,12 +95,10 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var fib1 = 1
     var fib2 = 1
-    var a = 0
     for (i in 0..(n - 3)) {
         val fibSum = fib1 + fib2
         fib1 = fib2
         fib2 = fibSum
-        a = 1 + i
     }
     return fib2
 }
@@ -162,20 +160,11 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var size = 0
-    var x = n
-    while (x > 0) {
-        x /= 10
-        size++
-    }
-    x = n
+    var count = n
     var result = 0
-    var a: Int
-    while (x > 0) {
-        a = x % 10
-        size -= 1
-        result += a * 10.0.pow(size).toInt()
-        x /= 10
+    while (count > 0) {
+        result = result * 10 + count % 10
+        count /= 10
     }
     return result
 }
@@ -235,6 +224,25 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
+/**{
+var sum = 0
+var i = 0
+var m = 1
+var num = 0
+var count = 0
+while (sum < n) {
+i = m * m
+m += 1
+num = i
+while (num > 0) {
+num /= 10
+count += 1
+}
+sum += count
+
+
+}
+ */
 
 /**
  * Сложная (5 баллов)
