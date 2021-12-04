@@ -2,6 +2,9 @@
 
 package lesson5.task1
 
+import kotlinx.html.MAP
+import kotlin.collections.contains as contains1
+
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -117,17 +120,13 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
-/**{
-operator fun <K, V> Map<K, V>.iterator(): Iterator<Map.Entry<K, V>> = entrySet().iterator()
-operator fun <K, V> Map.Entry<K, V>.component1() = getKey()
-operator fun <K, V> Map.Entry<K, V>.component2() = getValue()
-for ((key, element) in a) {
-println(true)
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    a.forEach{
+        if (!(b.containsKey(it.key) && it.value == b[it.key])) return false
+    }
 
+    return true
 }
-println(false)
-}*/
 
 
 /**
