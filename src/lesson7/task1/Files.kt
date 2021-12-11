@@ -113,7 +113,8 @@ fun sibilants(inputName: String, outputName: String) {
                     needToUpperCase = charArray[i + 1].isUpperCase()
                     charArray[i + 1] = 'у'
                 }
-                if (needToUpperCase){
+
+                if (needToUpperCase) {
                     charArray[i + 1] = charArray[i + 1].toUpperCase()
                 }
             }
