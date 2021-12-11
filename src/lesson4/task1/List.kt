@@ -318,4 +318,116 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+
+fun russian(n: Int): String {
+    val thousandsUnitsMap = mapOf<Int, String?>(
+        1 to "одна",
+        2 to "две",
+        3 to "три",
+        4 to "четыре",
+        5 to "пять",
+        6 to "шесть",
+        7 to "семь",
+        8 to "восемь",
+        9 to "девять"
+    )
+
+    val tensMap = mapOf<Int, String?>(
+        2 to "двадцать",
+        3 to "тридцать",
+        4 to "сорок",
+        5 to "пятьдесят",
+        6 to "шестьдесят",
+        7 to "семьдесят",
+        8 to "восемьдесят",
+        9 to "девяносто"
+    )
+
+    val exceptionalTensMap = mapOf<Int, String?>(
+        10 to "десять",
+        11 to "одиннадцать",
+        12 to "двенадцать",
+        13 to "тринадцать",
+        14 to "четырнадцать",
+        15 to "пятнадцать",
+        16 to "шестнадцать",
+        17 to "семнадцать",
+        18 to "восемнадцать",
+        19 to "девятнадцать"
+    )
+
+    val hundredsMap = mapOf<Int, String?>(
+        1 to "сто",
+        2 to "двести",
+        3 to "триста",
+        4 to "четыреста",
+        5 to "пятьсот",
+        6 to "шестьсот",
+        7 to "семьсот",
+        8 to "восемьсот",
+        9 to "девятьсот"
+    )
+
+    val unitsMap = mapOf<Int, String?>(
+        1 to "один",
+        2 to "два",
+        3 to "три",
+        4 to "четыре",
+        5 to "пять",
+        6 to "шесть",
+        7 to "семь",
+        8 to "восемь",
+        9 to "девять"
+    )
+
+    val thousandWordByUnitMap = mapOf<Int, String?>(
+        1 to "тысяча",
+        2 to "тысячи",
+        3 to "тысячи",
+        4 to "тысячи",
+        5 to "тысяч",
+        6 to "тысяч",
+        7 to "тысяч",
+        8 to "тысяч",
+        9 to "тысяч",
+        0 to "тысяч"
+    )
+
+    var outputString = ""
+
+    val hundredThousands = n / 100000
+    val tensThousands = (n % 100000) / 10000
+    val unitsThousands = (n % 10000) / 1000
+    val hundreds = (n % 1000) / 100
+    val tens = (n % 100) / 10
+    val units = n % 10
+
+    hundredsMap[hundredThousands]?.let { outputString += "$it " }
+
+    if (tensThousands == 1) {
+        val tensAndUnitsThousands = tensThousands * 10 + unitsThousands
+        exceptionalTensMap[tensAndUnitsThousands]?.let {
+            outputString += "$it тысяч "
+        }
+    } else {
+        tensMap[tensThousands]?.let { outputString += "$it " }
+        thousandsUnitsMap[unitsThousands]?.let { outputString += "$it " }
+        thousandWordByUnitMap[unitsThousands]?.let { if (outputString.isNotEmpty()) outputString += "$it " }
+    }
+
+    hundredsMap[hundreds]?.let { outputString += "$it " }
+
+    if (tens == 1) {
+        val tensAndUnits = tens * 10 + units
+        exceptionalTensMap[tensAndUnits]?.let {
+            outputString += "$it "
+        }
+    } else {
+        tensMap[tens]?.let { outputString += "$it " }
+        unitsMap[units]?.let { outputString += "$it " }
+    }
+
+
+    return outputString.trim()
+
+}
