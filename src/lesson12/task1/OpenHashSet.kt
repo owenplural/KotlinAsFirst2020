@@ -27,7 +27,7 @@ class OpenHashSet<T>(val capacity: Int) {
      * Число элементов в хеш-таблице
      */
     val size: Int
-        get() = elements.size
+        get() = TODO()
 
     /**
      * Признак пустоты
