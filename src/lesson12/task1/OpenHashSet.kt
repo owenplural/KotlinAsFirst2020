@@ -17,6 +17,7 @@ package lesson12.task1
  */
 class OpenHashSet<T>(val capacity: Int) {
 
+
     /**
      * Массив для хранения элементов хеш-таблицы
      */
@@ -25,7 +26,8 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Число элементов в хеш-таблице
      */
-    val size: Int get() = TODO()
+    val size: Int
+        get() = elements.size
 
     /**
      * Признак пустоты

@@ -224,25 +224,6 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
-/**{
-var sum = 0
-var i = 0
-var m = 1
-var num = 0
-var count = 0
-while (sum < n) {
-i = m * m
-m += 1
-num = i
-while (num > 0) {
-num /= 10
-count += 1
-}
-sum += count
-
-
-}
- */
 
 /**
  * Сложная (5 баллов)
