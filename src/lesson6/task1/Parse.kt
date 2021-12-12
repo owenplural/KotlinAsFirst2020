@@ -223,7 +223,7 @@ fun firstDuplicateIndex(str: String): Int {
     if (list.size < 2) {
         return -1
     } else {
-        for (s in 0..list.size - 1) {
+        for (s in 0..list.size - 2) {
             if (list[s].lowercase() == list[s + 1].lowercase()) {
                 return num
             }
