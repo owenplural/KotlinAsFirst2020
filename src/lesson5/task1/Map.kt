@@ -209,7 +209,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     for ((key, value) in stuff) {
         if (value.first == kind && (minvalue == null || value.second < minvalue)) {
             minname = key
-            minvalue = value.second.toDouble()
+            minvalue = value.second
         }
     }
     return minname
