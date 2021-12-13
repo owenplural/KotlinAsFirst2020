@@ -207,11 +207,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var minname: String? = null
     var minvalue: Double? = null
     for ((key, value) in stuff) {
-        if (value.first == kind) {
-            if (minvalue == null || value.second < minvalue) {
-                minname = key
-                minvalue = value.second
-            }
+        if (value.first == kind && (minvalue == null || value.second < minvalue)) {
+            minname = key
+            minvalue = value.second.toDouble()
         }
     }
     return minname
