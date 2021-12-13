@@ -2,6 +2,7 @@
 
 package lesson12.task1
 
+
 /**
  * Класс "хеш-таблица с открытой адресацией"
  *
@@ -27,28 +28,41 @@ class OpenHashSet<T>(val capacity: Int) {
      * Число элементов в хеш-таблице
      */
     val size: Int
-        get() = TODO()
+        get() {
+            if (capacity == 0) {
+                return 0
+            }
+            for (i in 0..capacity - 1) {
+                if (elements[i] == null) {
+                    return i
+                }
+            }
+            return capacity
+        }
 
-    /**
-     * Признак пустоты
-     */
-    fun isEmpty(): Boolean = TODO()
 
-    /**
-     * Добавление элемента.
-     * Вернуть true, если элемент был успешно добавлен,
-     * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
-     */
-    fun add(element: T): Boolean = TODO()
 
-    /**
-     * Проверка, входит ли заданный элемент в хеш-таблицу
-     */
-    operator fun contains(element: T): Boolean = TODO()
 
-    /**
-     * Таблицы равны, если в них одинаковое количество элементов,
-     * и любой элемент из второй таблицы входит также и в первую
-     */
-    override fun equals(other: Any?): Boolean = TODO()
+/**
+ * Признак пустоты
+ */
+fun isEmpty(): Boolean = TODO()
+
+/**
+ * Добавление элемента.
+ * Вернуть true, если элемент был успешно добавлен,
+ * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
+ */
+fun add(element: T): Boolean = TODO()
+
+/**
+ * Проверка, входит ли заданный элемент в хеш-таблицу
+ */
+operator fun contains(element: T): Boolean = TODO()
+
+/**
+ * Таблицы равны, если в них одинаковое количество элементов,
+ * и любой элемент из второй таблицы входит также и в первую
+ */
+override fun equals(other: Any?): Boolean = TODO()
 }
