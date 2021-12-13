@@ -2,6 +2,9 @@
 
 package lesson12.task1
 
+import kotlin.collections.contentHashCode as contentHashCode1
+import kotlin.collections.sliceArray as collectionsSliceArray
+
 
 /**
  * Класс "хеш-таблица с открытой адресацией"
@@ -106,11 +109,15 @@ class OpenHashSet<T>(val capacity: Int) {
                     return false
                 }
             }
+
         }
         return true
     }
 
-    override fun hashCode(): Int = elements.sliceArray(0..size).contentHashCode()
+    override fun hashCode(): Int {
+        return elements.collectionsSliceArray<Any?>(indices = 0..size).contentHashCode1<Any?>()
+    }
+
 }
 
 
