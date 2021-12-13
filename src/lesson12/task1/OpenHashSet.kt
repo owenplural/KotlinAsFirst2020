@@ -29,40 +29,89 @@ class OpenHashSet<T>(val capacity: Int) {
      */
     val size: Int
         get() {
-            if (capacity == 0) {
-                return 0
-            }
-            for (i in 0..capacity - 1) {
-                if (elements[i] == null) {
-                    return i
+            when (capacity) {
+                0 -> {
+                    return 0
+                }
+                else -> {
+                    for (index in 0..capacity - 1) {
+                        when {
+                            elements[index] == null -> {
+                                return index
+                            }
+                        }
+                    }
+                    return capacity
                 }
             }
-            return capacity
         }
 
 
+    /**
+     * Признак пустоты
+     */
+    fun isEmpty(): Boolean = capacity == 0 || elements[0] == null
+
+    /**
+     * Добавление элемента.
+     * Вернуть true, если элемент был успешно добавлен,
+     * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
+     */
+    fun add(element: T): Boolean {
+
+        for (index in 0..capacity - 1) {
+            when {
+                elements[index] == null -> {
+                    elements[index] = element
+                    return true
+                }
+                elements[index] == element -> {
+                    return false
+                }
+            }
+        }
+        return false
+    }
 
 
-/**
- * Признак пустоты
- */
-fun isEmpty(): Boolean = TODO()
+    /**
+     * Проверка, входит ли заданный элемент в хеш-таблицу
+     */
+    operator fun contains(element: T): Boolean {
+        for (index in 0..capacity - 1) {
+            when {
+                elements[index] == element -> {
+                    return true
+                }
+                elements[index] == null -> {
+                    return false
+                }
+            }
 
-/**
- * Добавление элемента.
- * Вернуть true, если элемент был успешно добавлен,
- * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
- */
-fun add(element: T): Boolean = TODO()
+        }
+        return false
+    }
 
-/**
- * Проверка, входит ли заданный элемент в хеш-таблицу
- */
-operator fun contains(element: T): Boolean = TODO()
+    /**
+     * Таблицы равны, если в них одинаковое количество элементов,
+     * и любой элемент из второй таблицы входит также и в первую
+     */
+    override fun equals(other: Any?): Boolean {
+        if (other !is OpenHashSet<*> || size != other.size) {
+            return false
+        }
+        for (index in 0..size - 1) {
+            when {
+                elements[index] != other.elements[index] -> {
+                    return false
+                }
+            }
+        }
+        return true
+    }
 
-/**
- * Таблицы равны, если в них одинаковое количество элементов,
- * и любой элемент из второй таблицы входит также и в первую
- */
-override fun equals(other: Any?): Boolean = TODO()
+    override fun hashCode(): Int = elements.sliceArray(0..size).contentHashCode()
 }
+
+
+
