@@ -3,6 +3,11 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import ru.spbstu.wheels.forEachIndexedB
+import java.lang.StringBuilder
+import javax.naming.NameNotFoundException
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -120,7 +125,14 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var vAbs = 0.0
+    for (i in 0 until v.size) {
+        vAbs += v[i] * v[i]
+    }
+    return sqrt(vAbs)
+}
+
 
 /**
  * Простая (2 балла)
@@ -128,13 +140,11 @@ fun abs(v: List<Double>): Double = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    val sum = list.sum()
-    val a = list.size
-    if (a > 0) {
-        return (sum / a)
-    } else {
+    val listAvg = list.sum() / list.size
+    if (list.isEmpty())
         return 0.0
-    }
+    else
+        return listAvg
 }
 
 /**
@@ -146,16 +156,14 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-
-    val meanResult = mean(list)
-    for (i in 0 until list.size) {
-        list[i]
-        list[i] = list[i] - meanResult
-
+    if (list.isNotEmpty()) {
+        val mean = mean(list)
+        for (el in 0 until list.size) {
+            list[el] -= mean
+        }
     }
     return list
 }
-
 
 /**
  * Средняя (3 балла)
@@ -164,7 +172,12 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    var c = 0
+    for (el in a.indices)
+        c += a[el] * b[el]
+    return c
+}
 
 /**
  * Средняя (3 балла)
@@ -174,7 +187,15 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    var c = 0
+    var y = 1
+    for (el in 0 until p.size) {
+        c += p[el] * y
+        y *= x
+    }
+    return c
+}
 
 /**
  * Средняя (3 балла)
@@ -187,8 +208,8 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    for (i in 1 until list.size) {
-        list[i] = list[i - 1] + list[i]
+    for (el in 1 until list.size) {
+        list[el] += list[el - 1]
     }
     return list
 }
@@ -201,18 +222,16 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var del = 2
+    var x = n
     val list = mutableListOf<Int>()
-    var q = n
-    while (q > 1) {
-        while (q % del == 0) {
-            list.add(del)
-            q /= del
-
-        }
-        del += 1
+    var i = 2
+    while (x > 1) {
+        if (x % i == 0) {
+            x /= i
+            list.add(i)
+        } else
+            i++
     }
-    list.sorted()
     return list
 }
 
@@ -223,10 +242,8 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String {
-    val listresult = factorize(n)
-    return listresult.joinToString(separator = "*")
-}
+fun factorizeToString(n: Int): String =
+    factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя (3 балла)
@@ -235,7 +252,20 @@ fun factorizeToString(n: Int): String {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var x = n
+    val result = mutableListOf<Int>()
+    if (n == 0) {
+        result.add(0)
+        return result
+    } else {
+        while (x > 0) {
+            result.add(x % base)
+            x /= base
+        }
+    }
+    return result.reversed()
+}
 
 /**
  * Сложная (4 балла)
@@ -248,7 +278,24 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val alp = ('a'..'z').toMutableList()
+    val x = convert(n, base)
+    var result = ""
+    if (n == 0) {
+        result += 0
+        return result
+    } else {
+        for (i in x.indices) {
+            val check = x[i]
+            if (check in 0..9)
+                result += check
+            else
+                result += alp[check - 10]
+        }
+    }
+    return result
+}
 
 /**
  * Средняя (3 балла)
@@ -257,7 +304,14 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    val ch = digits.reversed().toMutableList()
+    var result = 0
+    for (i in ch.indices) {
+        result += ch[i] * base.toDouble().pow(i).toInt()
+    }
+    return result
+}
 
 /**
  * Сложная (4 балла)
@@ -281,35 +335,20 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-val romNumb = listOf(
-    1000,
-    900,
-    500,
-    400,
-    100,
-    90,
-    50,
-    40,
-    10,
-    9,
-    5,
-    4,
-    1
-)
-val romAbc = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
 fun roman(n: Int): String {
-    var str = ""
-    var n1 = n
-    var i = 0
-    while (n1 > 0) {
-        while (n1 - romNumb[i] >= 0) {
-            str += romAbc[i]
-            n1 -= romNumb[i]
+    var k = n
+    val romanNum = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val arabianNum = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    return buildString {
+        for (i in arabianNum.size - 1 downTo 0) {
+            while (k >= arabianNum[i]) {
+                k -= arabianNum[i]
+                append(romanNum[i])
+            }
         }
-        i += 1
     }
-    return str
 }
+
 
 /**
  * Очень сложная (7 баллов)
@@ -318,116 +357,133 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-
 fun russian(n: Int): String {
-    val thousandsUnitsMap = mapOf<Int, String?>(
-        1 to "одна",
-        2 to "две",
-        3 to "три",
-        4 to "четыре",
-        5 to "пять",
-        6 to "шесть",
-        7 to "семь",
-        8 to "восемь",
-        9 to "девять"
-    )
-
-    val tensMap = mapOf<Int, String?>(
-        2 to "двадцать",
-        3 to "тридцать",
-        4 to "сорок",
-        5 to "пятьдесят",
-        6 to "шестьдесят",
-        7 to "семьдесят",
-        8 to "восемьдесят",
-        9 to "девяносто"
-    )
-
-    val exceptionalTensMap = mapOf<Int, String?>(
-        10 to "десять",
-        11 to "одиннадцать",
-        12 to "двенадцать",
-        13 to "тринадцать",
-        14 to "четырнадцать",
-        15 to "пятнадцать",
-        16 to "шестнадцать",
-        17 to "семнадцать",
-        18 to "восемнадцать",
-        19 to "девятнадцать"
-    )
-
-    val hundredsMap = mapOf<Int, String?>(
-        1 to "сто",
-        2 to "двести",
-        3 to "триста",
-        4 to "четыреста",
-        5 to "пятьсот",
-        6 to "шестьсот",
-        7 to "семьсот",
-        8 to "восемьсот",
-        9 to "девятьсот"
-    )
-
-    val unitsMap = mapOf<Int, String?>(
-        1 to "один",
-        2 to "два",
-        3 to "три",
-        4 to "четыре",
-        5 to "пять",
-        6 to "шесть",
-        7 to "семь",
-        8 to "восемь",
-        9 to "девять"
-    )
-
-    val thousandWordByUnitMap = mapOf<Int, String?>(
-        1 to "тысяча",
-        2 to "тысячи",
-        3 to "тысячи",
-        4 to "тысячи",
-        5 to "тысяч",
-        6 to "тысяч",
-        7 to "тысяч",
-        8 to "тысяч",
-        9 to "тысяч",
-        0 to "тысяч"
-    )
-
-    var outputString = ""
-
-    val hundredThousands = n / 100000
-    val tensThousands = (n % 100000) / 10000
-    val unitsThousands = (n % 10000) / 1000
-    val hundreds = (n % 1000) / 100
-    val tens = (n % 100) / 10
-    val units = n % 10
-
-    hundredsMap[hundredThousands]?.let { outputString += "$it " }
-
-    if (tensThousands == 1) {
-        val tensAndUnitsThousands = tensThousands * 10 + unitsThousands
-        exceptionalTensMap[tensAndUnitsThousands]?.let {
-            outputString += "$it тысяч "
+    val result = StringBuilder()
+    result.append(
+        when (n / 100000) {
+            9 -> " девятьсот"
+            8 -> " восемьсот"
+            7 -> " семьсот"
+            6 -> " шестьсот"
+            5 -> " пятьсот"
+            4 -> " четыреста"
+            3 -> " триста"
+            2 -> " двести"
+            1 -> " сто"
+            else -> ""
         }
-    } else {
-        tensMap[tensThousands]?.let { outputString += "$it " }
-        thousandsUnitsMap[unitsThousands]?.let { outputString += "$it " }
-        thousandWordByUnitMap[unitsThousands]?.let { if (outputString.isNotEmpty()) outputString += "$it " }
-    }
-
-    hundredsMap[hundreds]?.let { outputString += "$it " }
-
-    if (tens == 1) {
-        val tensAndUnits = tens * 10 + units
-        exceptionalTensMap[tensAndUnits]?.let {
-            outputString += "$it "
+    )
+    when ((n / 1000) % 100) {
+        19 -> result.append(" девятнадцать")
+        18 -> result.append(" восемнадцать")
+        17 -> result.append(" семнадцать")
+        16 -> result.append(" шестнадцать")
+        15 -> result.append(" пятнадцать")
+        14 -> result.append(" четырнадцать")
+        13 -> result.append(" тринадцать")
+        12 -> result.append(" двенадцать")
+        11 -> result.append(" одиннадцать")
+        10 -> result.append(" десять")
+        else -> {
+            result.append(
+                when ((n / 10000) % 10) {
+                    9 -> " девяносто"
+                    8 -> " восемьдесят"
+                    7 -> " семьдесят"
+                    6 -> " шестьдесят"
+                    5 -> " пятьдесят"
+                    4 -> " сорок"
+                    3 -> " тридцать"
+                    2 -> " двадцать"
+                    else -> ""
+                }
+            )
+            result.append(
+                when ((n / 1000) % 10) {
+                    9 -> " девять"
+                    8 -> " восемь"
+                    7 -> " семь"
+                    6 -> " шесть"
+                    5 -> " пять"
+                    4 -> " четыре"
+                    3 -> " три"
+                    2 -> " две"
+                    1 -> " одна"
+                    else -> ""
+                }
+            )
         }
-    } else {
-        tensMap[tens]?.let { outputString += "$it " }
-        unitsMap[units]?.let { outputString += "$it " }
     }
-
-
-    return outputString.trim()
-
+    if (((n / 10000) % 10 != 1) && (n / 1000) % 10 == 1) {
+        result.append(" тысяча")
+    } else if ((((n / 1000) % 10 == 2) || ((n / 1000) % 10 == 3) || ((n / 1000) % 10 == 4)) && (n / 10000) % 10 != 1) {
+        result.append(" тысячи")
+    } else if (n / 1000 != 0) {
+        result.append(" тысяч")
+    }
+    result.append(
+        when ((n / 100) % 10) {
+            9 -> " девятьсот"
+            8 -> " восемьсот"
+            7 -> " семьсот"
+            6 -> " шестьсот"
+            5 -> " пятьсот"
+            4 -> " четыреста"
+            3 -> " триста"
+            2 -> " двести"
+            1 -> " сто"
+            else -> ""
+        }
+    )
+    when (n % 100) {
+        19 -> result.append(" девятнадцать")
+        18 -> result.append(" восемнадцать")
+        17 -> result.append(" семнадцать")
+        16 -> result.append(" шестнадцать")
+        15 -> result.append(" пятнадцать")
+        14 -> result.append(" четырнадцать")
+        13 -> result.append(" тринадцать")
+        12 -> result.append(" двенадцать")
+        11 -> result.append(" одиннадцать")
+        10 -> result.append(" десять")
+        else -> {
+            result.append(
+                when ((n / 10) % 10) {
+                    9 -> " девяносто"
+                    8 -> " восемьдесят"
+                    7 -> " семьдесят"
+                    6 -> " шестьдесят"
+                    5 -> " пятьдесят"
+                    4 -> " сорок"
+                    3 -> " тридцать"
+                    2 -> " двадцать"
+                    else -> ""
+                }
+            )
+            result.append(
+                when (n % 10) {
+                    9 -> " девять"
+                    8 -> " восемь"
+                    7 -> " семь"
+                    6 -> " шесть"
+                    5 -> " пять"
+                    4 -> " четыре"
+                    3 -> " три"
+                    2 -> " два"
+                    1 -> " один"
+                    else -> ""
+                }
+            )
+        }
+    }
+    return result.toString().trim()
 }
+
+
+
+
+
+
+
+
+

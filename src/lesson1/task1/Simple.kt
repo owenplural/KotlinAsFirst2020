@@ -66,7 +66,7 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int = hours * 60 * 60 + minutes * 60 + seconds
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int = hours * 3600 + minutes * 60 + seconds
 
 /**
  * Тривиальная (1 балл)
@@ -92,7 +92,8 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = ((((deg + (min / 60.0)
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = (sqrt((sqr(x2 - x1)) + (sqr(y2 - y1))))
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double =
+    sqrt(sqr(x2 - x1) + sqr(y2 - y1))
 
 /**
  * Простая (2 балла)
@@ -100,13 +101,10 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = (sqrt(
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-
-fun thirdDigit(number: Int): Int {
-    var a: Int = number
-    a /= 100
-
-    return (a % 10)
-
+fun thirdDigit(number: Int): Int  {
+    val x1 = number / 100
+    val x2 = x1 % 10
+    return x2
 }
 
 /**

@@ -2,7 +2,8 @@
 
 package lesson3.task1
 
-import kotlin.math.pow
+import lesson1.task1.sqr
+import kotlin.math.*
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -73,17 +74,9 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int {
-    var count: Int
-    var m = n
-    if (n < 0) m *= -1
-    count = if (m == 0) 1 else 0
-    while (m > 0) {
-        m /= 10
-        count += 1
-    }
-    return count
-
+fun digitNumber(n: Int): Int = when {
+    n / 10 == 0 -> 1
+    else -> digitNumber(n / 10) + 1
 }
 
 /**
@@ -93,14 +86,16 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var fib1 = 1
-    var fib2 = 1
-    for (i in 0..(n - 3)) {
-        val fibSum = fib1 + fib2
-        fib1 = fib2
-        fib2 = fibSum
+    var fibOne = 1
+    var fibTwo = 1
+    var count = 0
+    while (count < n - 2) {
+        val sumOfFib = fibOne + fibTwo
+        fibOne = fibTwo
+        fibTwo = sumOfFib
+        count += 1
     }
-    return fib2
+    return fibTwo
 }
 
 /**
@@ -108,14 +103,24 @@ fun fib(n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..(n / 2))
+        if (n % i == 0)
+            return i
+    return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    for (i in (n / 2) downTo 1)
+        if (n % i == 0)
+            return i
+    return n
+}
 
 /**
  * Простая (2 балла)
@@ -133,7 +138,19 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var count = 0
+    var y = x
+    while (y != 1)
+        if (y % 2 == 0) {
+            y /= 2
+            count++
+        } else {
+            y = 3 * y + 1
+            count++
+        }
+    return count
+}
 
 /**
  * Средняя (3 балла)
@@ -141,7 +158,15 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var numOne = m
+    var numTwo = n
+    while (numOne != numTwo)
+        if (numOne > numTwo)
+            numOne -= numTwo
+        else numTwo -= numOne
+    return m * n / numOne
+}
 
 /**
  * Средняя (3 балла)
@@ -150,7 +175,17 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var n1 = m
+    var n2 = n
+    while (n1 != 0 && n2 != 0) {
+        if (n1 > n2)
+            n1 %= n2
+        else
+            n2 %= n1
+    }
+    return n1 + n2 == 1
+}
 
 /**
  * Средняя (3 балла)
@@ -190,7 +225,29 @@ fun isPalindrome(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var x = n
+    var has = true
+    var checkF = 0
+    var checkS = 0
+    if (x == 0) return false
+    else {
+        while (x > 0) {
+            checkF = x % 10
+            x /= 10
+            checkS = x % 10
+            if (checkF != checkS && x != 0) {
+                return true
+                break
+            } else {
+                has = false
+            }
+        }
+    }
+    return has
+}
+
+
 
 /**
  * Средняя (4 балла)
@@ -252,20 +309,17 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    if (n < 3) return 1
-    var prev1 = 1
-    var prev2 = 1
-    var count = n - 2
-    var result = 0
-    while (count > 0) {
-        result = prev1 + prev2
-        prev1 = prev2
-        prev2 = result
-        count -= digitNumber(result)
+    var number = 0
+    var sequence = 0
+    var length = 0
+    while (length < n) {
+        number++
+        sequence = fib(number)
+        length += digitNumber(sequence)
     }
-    if (count < 0) while (count != 0) {
-        result /= 10
-        count += 1
+    while (n < length) {
+        length--
+        sequence /= 10
     }
-    return result % 10
+    return sequence % 10
 }

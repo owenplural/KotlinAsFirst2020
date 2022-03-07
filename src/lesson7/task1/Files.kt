@@ -63,7 +63,14 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    val buff = File(outputName).bufferedWriter()
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty() || line[0] != '_') {
+            buff.write(line)
+            buff.newLine()
+        }
+    }
+    buff.close()
 }
 
 /**
@@ -144,7 +151,17 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val file = File(inputName).readLines()
+    val text = file.map { it.trim() }
+    var lengthOfMaxLine = 0
+    for (line in text) if (line.length > lengthOfMaxLine) lengthOfMaxLine = line.length
+    val buff = File(outputName).bufferedWriter()
+    for (line in text) {
+        for (i in 1..(lengthOfMaxLine - line.length) / 2) buff.write(" ")
+        buff.write(line)
+        buff.newLine()
+    }
+    buff.close()
 }
 
 /**

@@ -120,16 +120,13 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    a.forEach {
-        if (!(b.containsKey(it.key) && it.value == b[it.key])) return false
+    for ((key) in a) {
+        if (a[key] != b[key] || b[key] == null)
+            return false
     }
-
     return true
 }
-
-
 /**
  * Простая (2 балла)
  *
@@ -238,7 +235,13 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val f = mutableMapOf<String, Int>()
+    for (element in list)
+        if (f.containsKey(element)) f[element] = f.getValue(element) + 1
+        else f[element] = 1
+    return f.filterValues { it > 1 }
+}
 
 /**
  * Средняя (3 балла)
@@ -308,13 +311,14 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val map = mutableMapOf<Int, Int>()
-    for (element in list) {
-        val result = map[number - element]
-        if (result != null) return result to list.indexOf(element)
-        else map[element] = list.indexOf(element)
+    val result = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
+        if (list[i] !in result)
+            result[number - list[i]] = i
+        else
+            return Pair(result[list[i]]!!, i)
     }
-    return -1 to -1
+    return Pair(-1, -1)
 }
 
 /**

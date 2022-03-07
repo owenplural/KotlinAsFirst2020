@@ -76,38 +76,8 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String {
-    val a = str.split(" ")
-    if (a.size != 3) {
-        return ""
-    }
-    val d = a[0].toIntOrNull()
-    val y = a[2].toIntOrNull()
-    if (d == null || y == null) return ""
+fun dateStrToDigit(str: String): Int = TODO()
 
-    val m = when (a[1]) {
-        "января" -> "01"
-        "февраля" -> "02"
-        "марта" -> "03"
-        "апреля" -> "04"
-        "мая" -> "05"
-        "июня" -> "06"
-        "июля" -> "07"
-        "августа" -> "08"
-        "сентября" -> "09"
-        "октября" -> "10"
-        "ноября" -> "11"
-        "декабря" -> "12"
-        else -> return ""
-    }
-
-    if (d !in 1..daysInMonth(m.toInt(), y)) {
-        return ""
-    }
-    val dayStr = if (d in 1..9) "0$d" else "$d"
-
-    return "$dayStr.$m.$y"
-}
 
 /**
  * Средняя (4 балла)
@@ -195,7 +165,16 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!jumps.matches((Regex("""(\d+\s[ +%-]+)+"""))))
+        return -1
+    val h = jumps.split(" ")
+    var result = -1
+    for (i in h.indices step 2)
+        if ((h[i].toInt() > result) && "+" in h[i + 1])
+            result = h[i].toInt()
+    return result
+}
 
 /**
  * Сложная (6 баллов)
@@ -206,7 +185,23 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+
+    if (!expression.matches(Regex("""\d+( [+-] \d+)*"""))) throw IllegalArgumentException()
+    val splitter = expression.split(" ")
+    var result = splitter[0].toInt()
+    for (i in 1 until splitter.size step 2) {
+        if (i + 1 < splitter.size) {
+            val num = splitter[i + 1]
+            when (splitter[i]) {
+                "-" -> result -= num.toInt()
+                "+" -> result += num.toInt()
+            }
+        }
+    }
+    return result
+}
+
 
 /**
  * Сложная (6 баллов)
